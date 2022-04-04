@@ -1,3 +1,5 @@
+const evmProvider = require("@reef-defi/evm-provider");
+
 describe("************** Test ******************", () => {
     before(async () => {
         account1 = await reef.getSignerByName("account1");
@@ -29,7 +31,9 @@ describe("************** Test ******************", () => {
 
     it("Call callTwoAndDeleteMapping()", async () => {
         // Fails with --> "revert":"reverted"
-        await testOne.connect(account1).callTwoAndDeleteMapping();
+        await testOne.connect(account1).callTwoAndDeleteMapping({
+          customData: { storageLimit: evmProvider.MAX_STORAGE_LIMIT },
+        });
     });
 
     it("Call callTwo() and then deleteMapping()", async () => {
